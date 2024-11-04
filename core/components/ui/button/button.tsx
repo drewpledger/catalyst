@@ -1,60 +1,45 @@
-import { Slot } from '@radix-ui/react-slot';
-import { Loader2 as Spinner } from 'lucide-react';
-import { ComponentPropsWithRef, ElementRef, forwardRef } from 'react';
+import * as React from 'react';
 
-import { cn } from '~/lib/utils';
+import clsx from 'clsx';
 
-interface Props extends ComponentPropsWithRef<'button'> {
-  asChild?: boolean;
-  loading?: boolean;
-  loadingText?: string;
-  variant?: 'primary' | 'secondary' | 'subtle';
+export interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  children?: React.ReactNode;
+  variant?: 'default' | 'ghost' | 'link';
+  size?: 'large' | 'medium' | 'small' | 'icon';
+  active?: boolean;
 }
 
-const Button = forwardRef<ElementRef<'button'>, Props>(
-  (
-    {
-      asChild = false,
-      children,
-      className,
-      variant = 'primary',
-      loading,
-      loadingText,
-      disabled,
-      ...props
-    },
-    ref,
-  ) => {
-    const Comp = asChild ? Slot : 'button';
-
+const Button = React.forwardRef<HTMLButtonElement, Props>(
+  ({ className, variant = 'default', size = 'medium', active = true, children, ...props }, ref) => {
     return (
-      <Comp
-        className={cn(
-          'relative flex w-full items-center justify-center border-2 border-primary px-[30px] py-2.5 text-base font-semibold leading-6 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/20 disabled:border-gray-400',
-          variant === 'primary' &&
-            'bg-primary text-white hover:border-secondary hover:bg-secondary disabled:bg-gray-400 disabled:hover:border-gray-400 disabled:hover:bg-gray-400',
-          variant === 'secondary' &&
-            'bg-transparent text-primary hover:border-secondary hover:bg-secondary hover:bg-opacity-10 hover:text-secondary disabled:text-gray-400 disabled:hover:border-gray-400 disabled:hover:bg-transparent disabled:hover:text-gray-400',
-          variant === 'subtle' &&
-            'border-none bg-transparent text-primary hover:bg-secondary hover:bg-opacity-10 hover:text-secondary disabled:text-gray-400 disabled:hover:bg-transparent disabled:hover:text-gray-400',
-          className,
-        )}
-        disabled={disabled || loading}
+      <button
+        className={clsx('group relative z-0 rounded-full focus:outline-none', className)}
         ref={ref}
         {...props}
       >
-        {loading ? (
-          <>
-            <span className="absolute z-10 flex h-full w-full items-center justify-center">
-              <Spinner aria-hidden="true" className="animate-spin" />
-              <span className="sr-only">{loadingText}</span>
-            </span>
-            <span className="invisible flex items-center">{children}</span>
-          </>
-        ) : (
-          children
-        )}
-      </Comp>
+        <span
+          className={clsx(
+            'inline-flex items-center justify-center whitespace-nowrap rounded-full border font-bold ring-1 ring-inset ring-transparent ring-offset-0 transition-colors group-focus-visible:border-primary group-focus-visible:ring-primary',
+            {
+              default:
+                'pattern-shadow pattern-shadow-sm pattern-shadow-hover border-foreground bg-background',
+              ghost: 'border-transparent hover:bg-contrast-100',
+              link: 'underline-offset-4 hover:underline',
+            }[variant],
+            {
+              large: 'gap-x-2 px-4 py-2 text-base',
+              medium: 'gap-x-2 px-4 py-2 text-sm',
+              small: 'gap-x-1.5 px-3 py-1.5 text-xs',
+              icon: 'p-1.5',
+            }[size],
+            active
+              ? 'text-foreground'
+              : 'text-contrast-300 hover:text-contrast-400 [&_svg]:stroke-current',
+          )}
+        >
+          {children}
+        </span>
+      </button>
     );
   },
 );

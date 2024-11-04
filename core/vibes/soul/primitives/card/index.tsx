@@ -1,5 +1,5 @@
-import { BcImage } from '~/components/bc-image';
-import { Link } from '~/components/link';
+import Image from 'next/image';
+import Link from 'next/link';
 import { ComponentPropsWithoutRef } from 'react';
 
 import { clsx } from 'clsx';
@@ -13,6 +13,7 @@ export interface CardProps {
 }
 
 export const Card = function Card({
+  className,
   title,
   image,
   href,
@@ -22,7 +23,10 @@ export const Card = function Card({
   return (
     <Link
       href={href}
-      className="group relative flex aspect-[3/4] w-full min-w-56 max-w-md flex-col gap-2 rounded-lg ring-primary ring-offset-4 focus-visible:outline-0 focus-visible:ring-2 @4xl:min-w-72 @4xl:rounded-xl"
+      className={clsx(
+        'group relative flex aspect-[3/4] w-full flex-col gap-2 rounded-lg ring-primary ring-offset-4 focus-visible:outline-0 focus-visible:ring-2 @4xl:rounded-xl',
+        className,
+      )}
       {...props}
     >
       <ArrowUpRight
@@ -33,7 +37,7 @@ export const Card = function Card({
         )}
       />
       <div className="relative h-full w-full overflow-hidden rounded-lg @4xl:rounded-xl">
-        <BcImage
+        <Image
           src={image.src}
           fill
           alt={image.alt}
@@ -43,7 +47,7 @@ export const Card = function Card({
       </div>
       <span
         className={clsx(
-          'line-clamp-1 text-lg font-medium text-foreground @4xl:absolute @4xl:bottom-5 @4xl:left-5',
+          'line-clamp-1 text-lg font-medium text-foreground',
           textContrast === 'light' ? '@4xl:text-background' : '@4xl:text-foreground',
         )}
       >
@@ -55,7 +59,7 @@ export const Card = function Card({
 
 export const CardSkeleton = function CardSkeleton() {
   return (
-    <div className="relative flex aspect-[3/4] w-full min-w-56 max-w-md animate-pulse flex-col gap-2 @4xl:min-w-72">
+    <div className="relative flex aspect-[3/4] w-full animate-pulse flex-col gap-2 @4xl:min-w-72">
       {/* Image */}
       <div className="h-full w-full overflow-hidden rounded-lg bg-contrast-100 @4xl:rounded-xl" />
       {/* Title */}
