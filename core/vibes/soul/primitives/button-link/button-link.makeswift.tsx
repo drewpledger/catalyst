@@ -20,8 +20,9 @@ runtime.registerComponent(
     );
   },
   {
-    type: MakeswiftComponentType.Button,
-    label: 'Button',
+    type: 'primitive-button',
+    label: 'Primitives / Button',
+    icon: 'button',
     props: {
       className: Style({ properties: [Style.Margin] }),
       link: Link({ label: 'Link' }),

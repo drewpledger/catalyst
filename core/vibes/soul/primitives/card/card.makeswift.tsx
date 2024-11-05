@@ -19,8 +19,9 @@ runtime.registerComponent(
     );
   },
   {
-    type: 'catalyst-card',
-    label: 'Catalyst / Card',
+    type: 'primitive-card',
+    label: 'Primitives / Card',
+    icon: 'layout',
     props: {
       className: Style(),
       title: TextInput({ label: 'Title', defaultValue: 'Card' }),
