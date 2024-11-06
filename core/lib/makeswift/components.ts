@@ -5,6 +5,7 @@ import '@/vibes/soul/primitives/card/card.makeswift';
 import '@/vibes/soul/primitives/carousel/carousel.makeswift';
 import '@/vibes/soul/sections/slideshow/slideshow.makeswift';
 import '@/vibes/soul/primitives/card-carousel/card-carousel.makeswift';
+import '@/vibes/soul/primitives/products-carousel/products-carousel.makeswift';
 import '~/components/ui/carousel/carousel.makeswift';
 import '~/components/ui/slideshow/slideshow.makeswift';
 import '~/components/ui/tabs/tabs.makeswift';
